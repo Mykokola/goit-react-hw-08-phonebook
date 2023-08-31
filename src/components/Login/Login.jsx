@@ -1,35 +1,24 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { registerAuth } from 'redux/auth/operation';
-export function Register() {
-  const dispatch = useDispatch()
+import { logInAuth } from 'redux/auth/operation';
+export function Login() {
+    const dispatch = useDispatch()
     const {register,handleSubmit} = useForm({
-        name:'',
         email:'',
         password:'',
         mode: 'onTouched'
     })
-    const submitRegForm = data => {
-        console.log(data)
-        const {name,email,password} = data
-      dispatch(registerAuth({
-        name,
-        email,
-        password
-      }))
+    const handleLogin = data => {
+        const {email,password} = data
+        dispatch(logInAuth({
+            email,
+            password
+        }))
     }
-  return (
-    <>
-      <form onSubmit={handleSubmit(submitRegForm)}>
-      <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Name</label>
-          <input
-            name='name'
-            className="form-control"
-            {...register('name')}
-          />
-        </div>
+    return ( 
+        <>
+         <form onSubmit={handleSubmit(handleLogin)}>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Email address</label>
           <input
@@ -67,6 +56,6 @@ export function Register() {
           Submit
         </button>
       </form>
-    </>
-  );
+        </>
+    )
 }

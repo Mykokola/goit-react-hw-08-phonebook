@@ -20,7 +20,7 @@ export function ContactForm() {
     const loverName = data.name.toLowerCase();
     if (contactsValue.find(item => item.name.toLowerCase() === loverName)) {
       console.log('this name already exists');
-    } else dispatch(addContact({ name, Number: number }));
+    } else dispatch(addContact({ name,number }));
 
     reset();
   };
