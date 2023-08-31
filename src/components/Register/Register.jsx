@@ -11,7 +11,6 @@ export function Register() {
         mode: 'onTouched'
     })
     const submitRegForm = data => {
-        console.log(data)
         const {name,email,password} = data
       dispatch(registerAuth({
         name,
