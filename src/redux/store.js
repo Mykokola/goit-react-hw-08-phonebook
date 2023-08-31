@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 //import {filterSlice,persistedReducer } from "./taskSlice";
-import { contactReducer,filterReducer } from "./taskSlice";
+import { contactReducer,filterReducer } from "./contacts/taskSlice";
 import { persistStore,FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 export const store = configureStore({
     reducer: {

@@ -2,8 +2,8 @@ import React from 'react';
 import { FormTitle, FormContact, FormButton } from './ContactForm.Styled';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/operation';
-import { selectContact } from 'redux/selectors';
+import { addContact } from 'redux/contacts/operation';
+import { selectContact } from 'redux/contacts/selectors';
 export function ContactForm() {
   const dispatch = useDispatch();
   const contactsValue = useSelector(selectContact);

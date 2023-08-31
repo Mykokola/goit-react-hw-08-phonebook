@@ -1,8 +1,8 @@
 import { FilterLabel, FilterTitle } from './ContactListFilter.Styled';
 //import { getFilterValue, setFilter } from 'redux/taskSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilter } from 'redux/taskSlice';
-import { selectStatusFilter } from 'redux/selectors';
+import { setFilter } from 'redux/contacts/taskSlice';
+import { selectStatusFilter } from 'redux/contacts/selectors';
 export function ContactListFilter() {
   const dispatch = useDispatch();
   const {filter} = useSelector(selectStatusFilter)
