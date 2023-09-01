@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerAuth,logInAuth } from "./operation";
+import { registerAuth,logInAuth,logOut } from "./operation";
 
 const handlPenging = state => {
     state.isLoading = true;
@@ -38,7 +38,15 @@ const authSlice = createSlice({
             state.isLoggedIn = true;
             state.isLoading = false
         },
-        [logInAuth.rejected]:handleRejected
+        [logInAuth.rejected]:handleRejected,
+        [logOut.pending]:handlPenging,
+        [logOut.fulfilled](state){
+            state.user = {name:null,email:null};
+            state.token = null;
+            state.isLoggedIn = false;
+            state.isLoading = false;
+        },
+        [logOut.rejected]:handleRejected,
     }
 })
 export const authReducer = authSlice.reducer
