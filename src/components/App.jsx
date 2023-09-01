@@ -10,37 +10,35 @@ import { Layout } from './Layout/Layout';
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Layout/>}>
-      <Route index element={<HomePage />} />
-      <Route
-        path="login"
-        element={
-          <RestrictedRoute
-            redirectTo="/contacts"
-            component={<Login></Login>}
-          ></RestrictedRoute>
-        }
-      >
-        {' '}
-      </Route>
-      <Route
-        path="register"
-        element={
-          <RestrictedRoute
-            redirectTo="/contacts"
-            component={<Register></Register>}
-          ></RestrictedRoute>
-        }
-      ></Route>
-      <Route
-        path="contacts"
-        element={
-          <PrivateRoute
-            redirectTo="/login"
-            component={<Contacts></Contacts>}
-          ></PrivateRoute>
-        }
-      />
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route
+          path="login"
+          element={
+            <RestrictedRoute
+              redirectTo="/contacts"
+              component={<Login></Login>}
+            ></RestrictedRoute>
+          }
+        ></Route>
+        <Route
+          path="register"
+          element={
+            <RestrictedRoute
+              redirectTo="/contacts"
+              component={<Register></Register>}
+            ></RestrictedRoute>
+          }
+        ></Route>
+        <Route
+          path="contacts"
+          element={
+            <PrivateRoute
+              redirectTo="/login"
+              component={<Contacts></Contacts>}
+            ></PrivateRoute>
+          }
+        />
       </Route>
     </Routes>
   );

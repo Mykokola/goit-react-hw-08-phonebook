@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const fetchContact = createAsyncThunk(
-  'tasks/fetchAll',
+  'contacts/fetchContact',
   async (_, thunkAPI) => {
     try {
       const res = await axios.get('/contacts');
@@ -17,9 +17,9 @@ export const addContact = createAsyncThunk(
   'contacts/addContact',
   async (text, thunkAPI) => {
     try {
-      const response = await axios.post('/contacts', text);
-      return response.data;
-    } catch (e) {
+       await axios.post('/contacts', text);
+      thunkAPI.dispatch(fetchContact())
+      } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
   }

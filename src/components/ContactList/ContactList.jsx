@@ -5,7 +5,6 @@ import { deleteContact } from 'redux/contacts/operation';
 import { selectStatusFilter } from 'redux/contacts/selectors';
 export function ContactList() {
   const dispatch = useDispatch();
-
   const { filter } = useSelector(selectStatusFilter);
   const contactList = useSelector(selectContact);
   const filteredContact = contactList.filter(e =>
@@ -14,15 +13,14 @@ export function ContactList() {
   return (
     <>
       <ContactListUl>
-        {filteredContact.map(({ id, name, Number }) => {
+        {filteredContact.map(({ id, name, number }) => {
           return (
             <li key={id}>
-              {name} : {Number}
+              {name} : {number}
               <ContactListBtn
                 type="button"
                 onClick={() => {
                   dispatch(deleteContact(id));
-                  //  dispatch(fetchContact())
                 }}
               >
                 delete
