@@ -1,13 +1,13 @@
 import React from 'react';
 import { FormTitle, FormContact, FormButton } from './ContactForm.Styled';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contacts/operation';
+import { useSelector } from 'react-redux';
 import { selectContact } from 'redux/contacts/selectors';
 import { useSetContactMutation } from 'redux/contacts/operation';
+import { useGetContactsArryQuery } from 'redux/contacts/operation';
 export function ContactForm() {
-  const [setContact] = useSetContactMutation()
-  const dispatch = useDispatch();
+  const { refetch } = useGetContactsArryQuery();
+  const [setContact] = useSetContactMutation();
   const contactsValue = useSelector(selectContact);
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -22,8 +22,7 @@ export function ContactForm() {
     const loverName = data.name.toLowerCase();
     if (contactsValue.find(item => item.name.toLowerCase() === loverName)) {
       console.log('this name already exists');
-    } else dispatch(addContact({ name,number }));
-    setContact({name,number})
+    } else setContact({ name, number });
     reset();
   };
 

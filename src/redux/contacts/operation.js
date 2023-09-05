@@ -18,7 +18,8 @@ export const contactsApi = createApi({
   baseQuery,
   endpoints: builder => ({
     getContactsArry: builder.query({
-      query: () => `/contacts/`
+      query: () => `contacts/`,
+      providesTags: ['data']
     }),
     setContact: builder.mutation({
       query: newContact => ({
@@ -26,12 +27,21 @@ export const contactsApi = createApi({
         method:'POST',
         body:newContact,
       }),
-    invalidatesTags: ['Contacts']
+      invalidatesTags: ['data']
+
+    }),
+    deleteContact: builder.mutation({
+      query:contactId => ({
+        url:`/contacts/${contactId}`,
+        method:'DELETE',
+      }),
+      invalidatesTags: ['data']
+
     })
   }),
 });
 
-export const { useGetContactsArryQuery,useSetContactMutation } = contactsApi;
+export const { useDeleteContactMutation,useGetContactsArryQuery,useSetContactMutation } = contactsApi;
 
 export const fetchContact = createAsyncThunk(
   'contacts/fetchContact',

@@ -1,18 +1,12 @@
 import { ContactListBtn, ContactListUl } from './ContactList.Styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContact } from 'redux/contacts/selectors';
-import { deleteContact } from 'redux/contacts/operation';
 import { selectStatusFilter } from 'redux/contacts/selectors';
-import { useGetContactsArryQuery } from 'redux/contacts/operation';
+import { useGetContactsArryQuery,useDeleteContactMutation } from 'redux/contacts/operation';
 export function ContactList() {
-  const {data,error,isLoading} = useGetContactsArryQuery()
-  const s = useSelector(selectContact)
-  console.log(useGetContactsArryQuery())
-  console.log(s)
-  const dispatch = useDispatch();
+  const {data=[],error,isLoading} = useGetContactsArryQuery()
+  const [deleteContact] = useDeleteContactMutation()
   const { filter } = useSelector(selectStatusFilter);
-  const contactList = useSelector(selectContact);
-  const filteredContact = contactList.filter(e =>
+  const filteredContact = data.filter(e =>
     e.name.toLowerCase().includes(filter.toLocaleLowerCase())
   );
   return (
@@ -25,7 +19,7 @@ export function ContactList() {
               <ContactListBtn
                 type="button"
                 onClick={() => {
-                  dispatch(deleteContact(id));
+                  deleteContact(id);
                 }}
               >
                 delete
