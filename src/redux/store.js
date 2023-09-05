@@ -3,13 +3,11 @@ import { contactReducer,filterReducer } from "./contacts/taskSlice";
 import {
   persistStore,
   persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
+
 } from 'redux-persist';
+import { contactsApi } from "./contacts/operation";
+import { setupListeners } from '@reduxjs/toolkit/query'
+
 import { authReducer } from "./auth/slice";
 import  storage  from "redux-persist/lib/storage";
 const authPersistConfig = {
@@ -21,14 +19,13 @@ export const store = configureStore({
     reducer: {
         contacts:contactReducer,
         filter:filterReducer,
-        auth:persistReducer(authPersistConfig,authReducer)
+        auth:persistReducer(authPersistConfig,authReducer),
+        [contactsApi.reducerPath]: contactsApi.reducer,
     },
-    middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
-})
+    middleware: (getDefaultMiddleware) =>[
+   ...getDefaultMiddleware(),
+   contactsApi.middleware
 
+]})
+setupListeners(store.dispatch)
 export const persistor = persistStore(store)

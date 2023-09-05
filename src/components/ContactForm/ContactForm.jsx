@@ -4,7 +4,9 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts/operation';
 import { selectContact } from 'redux/contacts/selectors';
+import { useSetContactMutation } from 'redux/contacts/operation';
 export function ContactForm() {
+  const [setContact] = useSetContactMutation()
   const dispatch = useDispatch();
   const contactsValue = useSelector(selectContact);
   const { register, handleSubmit, reset } = useForm({
@@ -21,7 +23,7 @@ export function ContactForm() {
     if (contactsValue.find(item => item.name.toLowerCase() === loverName)) {
       console.log('this name already exists');
     } else dispatch(addContact({ name,number }));
-
+    setContact({name,number})
     reset();
   };
 

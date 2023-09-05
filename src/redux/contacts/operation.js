@@ -1,5 +1,37 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+const baseQuery = fetchBaseQuery({
+  baseUrl: 'https://connections-api.herokuapp.com',
+  prepareHeaders: (headers, { getState }) => {
+    const token = getState().auth.token;
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`);
+    }
+    return headers;
+  },
+});
+
+export const contactsApi = createApi({
+  reducerPath: 'ContactsApp',
+  baseQuery,
+  endpoints: builder => ({
+    getContactsArry: builder.query({
+      query: () => `/contacts/`
+    }),
+    setContact: builder.mutation({
+      query: newContact => ({
+        url:'contacts/',
+        method:'POST',
+        body:newContact,
+      }),
+    invalidatesTags: ['Contacts']
+    })
+  }),
+});
+
+export const { useGetContactsArryQuery,useSetContactMutation } = contactsApi;
 
 export const fetchContact = createAsyncThunk(
   'contacts/fetchContact',
@@ -17,9 +49,9 @@ export const addContact = createAsyncThunk(
   'contacts/addContact',
   async (text, thunkAPI) => {
     try {
-       await axios.post('/contacts', text);
-      thunkAPI.dispatch(fetchContact())
-      } catch (e) {
+      await axios.post('/contacts', text);
+      thunkAPI.dispatch(fetchContact());
+    } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
   }
