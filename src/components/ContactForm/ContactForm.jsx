@@ -1,14 +1,11 @@
 import React from 'react';
 import { FormTitle, FormContact, FormButton } from './ContactForm.Styled';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
-import { selectContact } from 'redux/contacts/selectors';
 import { useSetContactMutation } from 'redux/contacts/operation';
 import { useGetContactsArryQuery } from 'redux/contacts/operation';
 export function ContactForm() {
-  const { refetch } = useGetContactsArryQuery();
+  const { data,refetch } = useGetContactsArryQuery();
   const [setContact] = useSetContactMutation();
-  const contactsValue = useSelector(selectContact);
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       name: '',
@@ -17,10 +14,10 @@ export function ContactForm() {
     mode: 'onTouched',
   });
 
-  const submitForm = data => {
-    const { name, number } = data;
-    const loverName = data.name.toLowerCase();
-    if (contactsValue.find(item => item.name.toLowerCase() === loverName)) {
+  const submitForm = dataForm => {
+    const { name, number } = dataForm;
+    const loverName = dataForm.name.toLowerCase();
+    if (data.find(item => item.name.toLowerCase() === loverName)) {
       console.log('this name already exists');
     } else setContact({ name, number });
     reset();
