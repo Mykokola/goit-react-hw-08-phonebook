@@ -10,6 +10,8 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 
 import { authReducer } from "./auth/slice";
 import  storage  from "redux-persist/lib/storage";
+
+
 const authPersistConfig = {
   key: 'auth',
   storage,

@@ -5,8 +5,10 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://connections-api.herokuapp.com',
   prepareHeaders: (headers, { getState }) => {
-    const token = getState().auth.token;
-    if (token) {
+    const superMegaToken = JSON.parse(localStorage.getItem('persist:auth')).token
+    const token = getState().auth.token
+    if (superMegaToken) {
+      axios.defaults.headers.common.Authorization = `Bearer ${token}` 
       headers.set('authorization', `Bearer ${token}`);
     }
     return headers;
@@ -20,6 +22,11 @@ export const contactsApi = createApi({
     getContactsArry: builder.query({
       query: () => `contacts/`,
       providesTags: ['data']
+    }),
+    currentUser:builder.query({
+      query: () => '/users/current',
+        providesTags: ['data']
+      
     }),
     setContact: builder.mutation({
       query: newContact => ({
@@ -41,7 +48,7 @@ export const contactsApi = createApi({
   }),
 });
 
-export const { useDeleteContactMutation,useGetContactsArryQuery,useSetContactMutation } = contactsApi;
+export const {useCurrentUserQuery ,useDeleteContactMutation,useGetContactsArryQuery,useSetContactMutation } = contactsApi;
 
 export const fetchContact = createAsyncThunk(
   'contacts/fetchContact',
