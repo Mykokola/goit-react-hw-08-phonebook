@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useSetContactMutation } from 'redux/contacts/operation';
 import { useGetContactsArryQuery } from 'redux/contacts/operation';
 export function ContactForm() {
-  const {data=[] } = useGetContactsArryQuery();
+  const { data = [] } = useGetContactsArryQuery();
   const [setContact] = useSetContactMutation();
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
