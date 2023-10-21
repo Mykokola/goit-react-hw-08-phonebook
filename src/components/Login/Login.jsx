@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { logInAuth } from 'redux/auth/operation';
-import { currentUser } from 'redux/auth/operation';
 
 export function Login() {
   

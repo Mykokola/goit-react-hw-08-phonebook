@@ -2,9 +2,9 @@ import React from 'react';
 import { FormTitle, FormContact, FormButton } from './ContactForm.Styled';
 import { useForm } from 'react-hook-form';
 import { useSetContactMutation } from 'redux/contacts/operation';
-import { useGetContactsArryQuery,useCurrentUserQuery } from 'redux/contacts/operation';
+import { useGetContactsArryQuery } from 'redux/contacts/operation';
 export function ContactForm() {
-  const {data=[], refetch } = useGetContactsArryQuery();
+  const {data=[] } = useGetContactsArryQuery();
   const [setContact] = useSetContactMutation();
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
